@@ -21,22 +21,22 @@
   "author": "Karlo Majer",
   "license": "ISC",
   "dependencies": {
-    "drizzle-orm": "^0.33.0",
-    "pg": "^8.11.3",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
+    "drizzle-orm": "^0.44.7",
+    "pg": "^8.16.3",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
     "googleapis": "^128.0.0",
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.24.0",
-    "tsx": "^4.7.0",
-    "@types/pg": "^8.10.9",
-    "@types/express": "^4.17.21",
-    "@types/express-session": "^1.17.10",
+    "drizzle-kit": "^0.31.5",
+    "tsx": "^4.20.6",
+    "@types/pg": "^8.15.5",
+    "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
     "@types/node": "^20.10.6",
     "@types/cors": "^2.8.17",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.3"
   }
 }
