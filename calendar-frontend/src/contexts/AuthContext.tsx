@@ -1,7 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { QUERY_KEYS } from "../api/config/queryKeys";
-import authApiClient, { type User } from "../api/clients/authApiClient";
+import useUserQuery from "../queries/useUserQuery";
+import type { User } from "../api/clients/authApiClient";
 
 interface AuthContextType {
   user: User | null;
@@ -12,12 +11,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { data, isLoading } = useQuery({
-    queryKey: QUERY_KEYS.CURRENT_USER,
-    queryFn: authApiClient.getCurrentUser,
-    retry: false,
-    staleTime: 5 * 60 * 1000,
-  });
+  const { data, isLoading } = useUserQuery();
 
   const value: AuthContextType = {
     user: data?.user || null,
