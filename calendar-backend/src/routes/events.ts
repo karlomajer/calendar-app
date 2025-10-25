@@ -100,24 +100,16 @@ router.post("/", async (req: Request, res: Response) => {
       { name, date, startTime, endTime }
     );
 
-    const calendarEvents = await fetchCalendarEvents(
-      user.accessToken,
-      user.refreshToken
-    );
-
-    await db.delete(events).where(eq(events.userId, userId));
-
-    if (calendarEvents.length > 0) {
-      const eventsToInsert = calendarEvents.map((event) => ({
+    await db
+      .insert(events)
+      .values({
         userId: userId as string,
-        googleEventId: event.id,
-        name: event.summary,
-        startDateTime: new Date(event.start.dateTime),
-        endDateTime: new Date(event.end.dateTime),
-      }));
-
-      await db.insert(events).values(eventsToInsert);
-    }
+        googleEventId: calendarEvent.id,
+        name: calendarEvent.summary,
+        startDateTime: new Date(calendarEvent.start.dateTime),
+        endDateTime: new Date(calendarEvent.end.dateTime),
+      })
+      .returning();
 
     res.status(201).json({
       message: "Event created successfully",
