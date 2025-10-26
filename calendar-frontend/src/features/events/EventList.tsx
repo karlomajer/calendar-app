@@ -30,12 +30,13 @@ interface GroupedEvents {
 const EventList = ({ events, dateRange }: EventListProps) => {
   const groupedEvents = useMemo(() => {
     const now = new Date();
-    const endDate = addDays(now, dateRange);
+    const startDate = startOfDay(now);
+    const endDate = addDays(startDate, dateRange);
 
     const filteredEvents = events.filter((event) => {
       const eventDate = parseISO(event.startDateTime);
 
-      return eventDate >= startOfDay(now) && eventDate < endDate;
+      return eventDate >= startDate && eventDate < endDate;
     });
 
     const sortedEvents = filteredEvents.sort(
