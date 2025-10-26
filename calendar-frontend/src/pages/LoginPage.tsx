@@ -9,15 +9,12 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { toast } from "react-toastify";
-import useAuth from "../hooks/useAuth";
 import useGetAuthUrlMutation from "../features/auth/mutations/useGetAuthUrlMutation";
 import useHandleCallbackMutation from "../features/auth/mutations/useHandleCallbackMutation";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
 
   const { mutate: getAuthUrl, isPending: isGettingAuthUrl } =
     useGetAuthUrlMutation();
@@ -26,12 +23,6 @@ const LoginPage = () => {
     useHandleCallbackMutation();
 
   const callbackProcessedRef = useRef(false);
-
-  useEffect(() => {
-    if (isAuthenticated && !authLoading) {
-      navigate("/");
-    }
-  }, [isAuthenticated, authLoading, navigate]);
 
   useEffect(() => {
     const code = searchParams.get("code");
@@ -60,9 +51,7 @@ const LoginPage = () => {
     });
   };
 
-  const isLoading = authLoading || isGettingAuthUrl || isHandlingCallback;
-
-  if (isLoading) {
+  if (isGettingAuthUrl || isHandlingCallback) {
     return (
       <Container maxWidth="sm">
         <Box
@@ -103,7 +92,7 @@ const LoginPage = () => {
           size="large"
           startIcon={<GoogleIcon />}
           onClick={handleLogin}
-          disabled={isLoading}
+          disabled={isGettingAuthUrl || isHandlingCallback}
           sx={{ mt: 2 }}
         >
           Sign in with Google
