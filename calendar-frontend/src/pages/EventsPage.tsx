@@ -13,6 +13,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import AddIcon from "@mui/icons-material/Add";
 import useEventsQuery from "../features/events/queries/useEventsQuery";
 import useRefreshEventsMutation from "../features/events/mutations/useRefreshEventsMutation";
+import EventList from "../features/events/EventList";
 
 const EventsPage = () => {
   const { data, isLoading: isLoadingEvents } = useEventsQuery();
@@ -77,7 +78,7 @@ const EventsPage = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <div>Event list</div>
+          <EventList events={data?.events || []} dateRange={dateRange} />
         )}
       </Box>
     </Container>
